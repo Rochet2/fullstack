@@ -1,0 +1,15 @@
+kayttaja->selain:
+note left of selain
+käyttäjä painaa "Talleta" nappia
+end note
+note right of selain
+ JavaScript päivittää näkymän lisäämällä uuden muistiinpanon
+end note
+note right of selain
+selain liittää muistiinpanon sisällön pyyntöön
+end note
+selain->palvelin: POST https://fullstack-exampleapp.herokuapp.com/new_note
+note right of palvelin
+muistiinpano lisätään palvelimelle listaan
+end note
+palvelin->selain: status 201, onnistumiskoodi

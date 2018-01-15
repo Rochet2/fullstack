@@ -1,0 +1,40 @@
+kayttaja->selain:
+note left of selain
+käyttäjä painaa "Talleta" nappia
+end note
+note right of selain
+selain liittää kaavakkeen tekstikentän sisällön pyyntöön
+end note
+selain->palvelin: POST https://fullstack-exampleapp.herokuapp.com/new_note
+note right of palvelin
+muistiinpano talletetaan palvelimelle listaan
+end note
+palvelin->selain: status 302, uudelleenohjauspyyntö "/notes"
+
+selain->palvelin: GET https://fullstack-exampleapp.herokuapp.com/notes
+palvelin->selain: status 200, staattista HTML-koodia
+
+selain->palvelin: https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin->selain: status 200, staattista CSS-koodia
+
+note left of selain
+ selain näyttää palvelimen palauttaman HTML:n CSS:llä muotoiltuna
+end note
+
+selain->palvelin: https://fullstack-exampleapp.herokuapp.com/main.js
+palvelin->selain: status 200, staattista JavaScript-koodia
+
+note right of selain
+ JavaScript suoritetaan
+end note
+
+selain->palvelin: https://fullstack-exampleapp.herokuapp.com/data.json
+note right of palvelin
+ JSON muodostetaan dynaamisesti palvelimella olevasta listasta
+end note
+palvelin->selain: status 200, JSON muotoista tekstiä
+
+note left of selain
+ JavaScript päivittää näkymän lisäämällä listan muistiinpanoista,
+ jotka luetaan JSON tekstistä
+end note
