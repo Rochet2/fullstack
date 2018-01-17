@@ -19,17 +19,21 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>Statistiikka</h1>
-      {
-        props.things.map((thing, idx) => (
-          <Statistic key={idx} label={thing.label} value={thing.value()} />
-        ))
-      }
-      <Statistic label="keskiarvo" value={avg.toFixed(1)} />
-      <Statistic label="positiivisia" value={pospct.toFixed(1) + " %"} />
+      <table>
+        <tbody>
+          {
+            props.things.map((thing, idx) => (
+              <Statistic key={idx} label={thing.label} value={thing.value()} />
+            ))
+          }
+          <Statistic label="keskiarvo" value={avg.toFixed(1)} />
+          <Statistic label="positiivisia" value={pospct.toFixed(1) + " %"} />
+        </tbody>
+      </table>
     </div>
   )
 }
-const Statistic = (props) => (<p>{props.label}: {props.value}</p>)
+const Statistic = (props) => (<tr><td>{props.label}:</td><td>{props.value}</td></tr>)
 
 class App extends React.Component {
   constructor() {
