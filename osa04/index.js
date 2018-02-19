@@ -5,34 +5,27 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
-const Blog = require('./models/blog')
-
+const mongoose = require('mongoose')
+const blogsRouter = require('./controllers/blogs')
 const app = express()
+morgan.token('body', function (req) { return JSON.stringify(req.body) })
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then( () => {
+    console.log('connected to database')
+  })
+  .catch( err => {
+    console.log(err)
+  })
+
+mongoose.Promise = global.Promise
 
 // app.use(express.static('build'))
 app.use(cors())
-
-morgan.token('body', function (req) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :body :status :res[content-length] - :response-time ms'))
 app.use(bodyParser.json())
-
-app.get('/api/blogs', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
-})
-
-app.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
-
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
-})
+app.use('/api/blogs', blogsRouter)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

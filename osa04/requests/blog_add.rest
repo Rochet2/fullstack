@@ -2,10 +2,10 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Pertin blogi",
-    "author": "Pertti",
-    "url": "www.google.com",
-    "likes": 0
+  "title": "Pertin blogi",
+  "author": "Pertti",
+  "url": "www.google.com",
+  "likes": 0
 }
 
 ###
@@ -13,8 +13,8 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-    "title": "Karin blogi",
-    "author": "Kari",
-    "url": "www.google.com",
-    "likes": 0
+  "title": "Karin blogi",
+  "author": "Kari",
+  "url": "www.google.com",
+  "likes": 0
 }
