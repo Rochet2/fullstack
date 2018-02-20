@@ -47,10 +47,6 @@ describe('when blogs exist', async () => {
 
       const expected = await GetBlogs()
       expect(response.body).toHaveLength(expected.length)
-      console.log(response.body[0])
-      console.log(expected[0])
-      console.log(response.body[0].toString())
-      console.log(expected[0].toString())
       expected.forEach(blog => {
         expect(response.body).toContainEqual(blog)
       })
@@ -86,8 +82,6 @@ describe('when blogs exist', async () => {
         .expect(201)
         .expect('Content-Type', /application\/json/)
       const blogs = await GetBlogs()
-      console.log(postresponse.body.toString(), blogs[blogs.length-1].toString())
-      console.log(typeof(postresponse.body), typeof(blogs[blogs.length-1]))
       expect(blogs).toContainEqual(Blog.format(postresponse.body))
     })
 

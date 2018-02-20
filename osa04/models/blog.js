@@ -9,7 +9,7 @@ const blogSchema = new mongoose.Schema ({
 
 blogSchema.statics.format = function ({ _id, title, author, url, likes }) {
   return {
-    _id,
+    _id: (_id === undefined) ? _id : _id.toString(),
     title,
     author,
     url,
