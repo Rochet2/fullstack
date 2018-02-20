@@ -24,4 +24,5 @@ https://fullstack-hy.github.io/
 - to debug start backend with `node --inspect index.js` and in chrome open [chrome://inspect](chrome://inspect)
 - `npm install mongoose --save` to install mongoose
 - `npm init` to create basic backend
+- `npm install --save-dev jest` to install testing framework and add `"test": "jest --verbose"` to `package.json` under `scripts`
 
