@@ -1,3 +1,5 @@
+const Blog = require('../models/blog')
+
 const InitialBlogs = [
   {
     _id: '5a422a851b54a676234d17f7',
@@ -49,9 +51,26 @@ const InitialBlogs = [
   }
 ]
 
+const GetBlogs = async () => {
+  const blogs = await Blog.find({})
+  return blogs.map(Blog.format)
+}
+
 const GetUnusedId = () => '000'
+
+const NewBlog = (fields = {}) => Object.assign(
+  {
+    title: 'Pertin blogi',
+    author: 'Pertti',
+    url: 'www.google.com',
+    likes: 0,
+  },
+  fields
+)
 
 module.exports = {
   InitialBlogs,
   GetUnusedId,
+  GetBlogs,
+  NewBlog,
 }
