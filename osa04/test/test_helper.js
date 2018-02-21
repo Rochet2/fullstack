@@ -1,4 +1,5 @@
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 const InitialBlogs = [
   {
@@ -51,12 +52,41 @@ const InitialBlogs = [
   }
 ]
 
+const InitialUsers = [
+  {
+    _id: '8a422bc61b54a676234d17fc',
+    username: 'marja3',
+    name: 'Terttu',
+    passwordHash: '8c422bc61b54a676234d17fc',
+    adult: true,
+  },
+  {
+    _id: '3a422bc61b54a676234d17fc',
+    username: 'pete90',
+    name: 'Pekka',
+    passwordHash: '3d422bc61b54a676234d17fc',
+    adult: true,
+  },
+  {
+    _id: '6a422bc61b54a676234d17fc',
+    username: 'user99',
+    name: 'Pertti',
+    passwordHash: '6b422bc61b54a676234d17fc',
+    adult: false,
+  },
+  {
+    _id: '5a422bc61b54a676234d17fc',
+    username: 'root',
+    name: 'admin',
+    passwordHash: '5a422bc61b54a676234d17fc',
+    adult: true,
+  },
+]
+
 const GetBlogs = async () => {
   const blogs = await Blog.find({})
   return blogs.map(Blog.format)
 }
-
-const GetUnusedId = () => '000'
 
 const NewBlog = (fields = {}) => Object.assign(
   {
@@ -64,13 +94,43 @@ const NewBlog = (fields = {}) => Object.assign(
     author: 'Pertti',
     url: 'www.google.com',
     likes: 0,
+    userid: '8a422bc61b54a676234d17fc',
   },
   fields
 )
 
+const GetUsers = async () => {
+  const users = await User.find({})
+  return users.map(User.format)
+}
+
+let usernameid = 0
+const GenUsername = () => ('user'+(usernameid++))
+
+const NewUser = (fields = {}) => Object.assign(
+  {
+    username: GenUsername(),
+    name: 'my name',
+    password: 'my password',
+    adult: false,
+  },
+  fields
+)
+
+const GetUnusedId = () => '000'
+
+const ModifyHash = (hash, overwrite = {}) => Object.assign({}, hash, overwrite)
+
 module.exports = {
-  InitialBlogs,
+  ModifyHash,
   GetUnusedId,
+  GenUsername,
+
+  InitialBlogs,
   GetBlogs,
   NewBlog,
+
+  InitialUsers,
+  GetUsers,
+  NewUser,
 }

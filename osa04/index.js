@@ -6,12 +6,27 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const blogsRouter = require('./controllers/blogs')
 const config = require('./utils/config')
 const app = express()
 const http = require('http')
 const middleware = require('./utils/middleware')
+
+const blogsRouter = require('./controllers/blogs')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
+
+// app.use(express.static('build'))
 morgan.token('body', function (req) { return JSON.stringify(req.body) })
+app.use(cors())
+app.use(morgan(':method :url :body :status :res[content-length] - :response-time ms'))
+app.use(bodyParser.json())
+app.use(middleware.tokenExtractor)
+
+app.use('/api/blogs', blogsRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
+
+app.use(middleware.error)
 
 mongoose
   .connect(config.mongoUrl)
@@ -23,15 +38,6 @@ mongoose
   })
 
 mongoose.Promise = global.Promise
-
-// app.use(express.static('build'))
-app.use(cors())
-app.use(morgan(':method :url :body :status :res[content-length] - :response-time ms'))
-app.use(bodyParser.json())
-
-app.use('/api/blogs', blogsRouter)
-
-app.use(middleware.error)
 
 const server = http.createServer(app)
 
