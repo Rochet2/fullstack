@@ -16,7 +16,7 @@ blogSchema.statics.format = function ({ _id, title, author, url, likes, user }) 
     author,
     url,
     likes,
-    user: (user === undefined) ? user : user.toString(),
+    user,
   })
 }
 

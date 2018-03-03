@@ -15,7 +15,7 @@ blogsRouter.get('/', async (request, response) => {
     return response.json(blogs.map(Blog.format))
   } catch (err) {
     console.log(err)
-    return response.status(400).send({ error: 'something went wrong' })
+    return response.status(400).json({ error: 'something went wrong' })
   }
 })
 
@@ -53,7 +53,7 @@ blogsRouter.post('/', async (request, response) => {
       response.status(401).json({ error: err.message })
     } else {
       console.log(err)
-      return response.status(500).send({ error: 'something went wrong' })
+      return response.status(500).json({ error: 'something went wrong' })
     }
   }
 })
@@ -70,26 +70,28 @@ blogsRouter.patch('/:id', async (request, response) => {
     return response.json(Blog.format(blog))
   } catch (err) {
     console.log(err)
-    return response.status(400).send({ error: 'could not patch' })
+    return response.status(400).json({ error: 'could not patch' })
   }
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
   try {
-    const userid = utils.GetUserId(request.token)
-    if (!userid) {
-      return response.status(401).json({ error: 'token missing or invalid' })
-    }
-
     const blog = await Blog.findById(request.params.id)
-    if (blog.user.toString() !== userid.toString())
-      return response.status(401).send({ error: 'you must own the blog' })
+
+    if (blog.user) {
+      const userid = utils.GetUserId(request.token)
+      if (!userid) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+      }
+      if (blog.user.toString() !== userid.toString())
+        return response.status(401).json({ error: 'you must own the blog' })
+    }
 
     await blog.remove()
     return response.status(204).end()
   } catch (err) {
     console.log(err)
-    return response.status(400).send({ error: 'malformatted id' })
+    return response.status(400).json({ error: 'malformatted id' })
   }
 })
 

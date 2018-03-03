@@ -38,15 +38,6 @@ describe('when no blogs exist', async () => {
       expect(response.body).toEqual([])
     })
   })
-
-  describe.skip('/api/blogs/:id', async () => {
-    test('GET returns 404', async () => {
-      const unusedid = helper.GetUnusedId()
-      await api
-        .get(`/api/blogs/${unusedid}`)
-        .expect(404)
-    })
-  })
 })
 
 
@@ -136,16 +127,6 @@ describe('when users exist', async () => {
           .expect('Content-Type', /application\/json/)
 
         expect(response.body).toEqual({ error: 'url missing' })
-      })
-    })
-
-    describe.skip('/api/blogs/:id', async () => {
-      test('GET returns correct blog', async () => {
-        const expectedblog = await helper.GetBlogs()[0]
-        const response = await api
-          .get(`/api/blogs/${expectedblog._id}`)
-
-        expect(response.body).toEqual(expectedblog)
       })
     })
 
