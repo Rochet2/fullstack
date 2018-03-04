@@ -5,10 +5,11 @@ import App from './App';
 import {createStore} from 'redux'
 import reducer from './reducer'
 
+const store = createStore(reducer)
+
 const renderApp = () => {
-    ReactDOM.render(<App />, document.getElementById('root'));
+    ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 }
 
-const store = createStore(reducer)
 store.subscribe(renderApp)
 renderApp()
